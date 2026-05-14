@@ -5,11 +5,13 @@
     <artifactId>ProyectoFinalProgra3Copia1</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>agencia.cliente.AgenteEspecialUI</exec.mainClass>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>com.formdev</groupId>
@@ -17,20 +19,28 @@
             <version>3.4</version>
         </dependency>
     </dependencies>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <!-- Aquí le decimos a Java qué ventana abrir al darle doble clic -->
-                            <mainClass>agencia.cliente.AgenteEspecialUI</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>agencia.cliente.AgenteEspecialUI</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
