@@ -1,0 +1,31 @@
+name: Generar archivo JAR
+
+# Esto le dice a GitHub que construya el proyecto cada vez que subas código a master o main
+on:
+  push:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar el código
+      uses: actions/checkout@v4
+
+    - name: Configurar Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '24' # Usamos la versión 24 (puedes cambiarla a la que tengas en tu PC)
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Construir el proyecto con Maven
+      run: mvn clean package -DskipTests
+
+    - name: Guardar el .jar para descargarlo
+      uses: actions/upload-artifact@v4
+      with:
+        name: MiProyecto-Ejecutable
+        # Esto busca cualquier archivo .jar dentro de la carpeta target y lo guarda
+        path: target/*.jar
